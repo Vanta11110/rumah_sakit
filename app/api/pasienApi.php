@@ -62,7 +62,7 @@ return function (App $app) {
         $pasienAlamat = $parseBody['alamat'];
         $pasienTel = $parseBody['nomor_telepon'];
         $db = $this->get(PDO::class);
-        $query = $db->prepare('CALL pendaftaran_pasien(?,?,?,?,?)');
+        $query = $db->prepare('CALL TambahPasien(?,?,?,?,?, @lastId)');
 
         $query->execute([$pasienName, $pasienLahir, $pasienGender, $pasienAlamat, $pasienTel]);
         $lastIdQuery = $db->query("SELECT @lastId as last_id");

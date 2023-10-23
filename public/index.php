@@ -56,6 +56,12 @@ $jadwalDokterApi = require __DIR__ . '/../app/api/jadwalDokterApi.php';
 $jadwalDokterApi($app);
 $rawatInapApi = require __DIR__ . '/../app/api/rawatInapApi.php';
 $rawatInapApi($app);
+$pemeriksaanMedisApi = require __DIR__ . '/../app/api/pemeriksaanMedisApi.php';
+$pemeriksaanMedisApi($app);
+$resepObatApi = require __DIR__ . '/../app/api/resepObatApi.php';
+$resepObatApi($app);
+$statusPembayaranApi = require __DIR__ . '/../app/api/statusPembayaranApi.php';
+$statusPembayaranApi($app);
 
 /** @var SettingsInterface $settings */
 $settings = $container->get(SettingsInterface::class);
