@@ -15,7 +15,7 @@ return function (App $app) {
     $app->get('/dokter', function(Request $request, Response $response) {
         $db = $this->get(PDO::class);
 
-        $query = $db->query('SELECT * FROM dokter_view');
+        $query = $db->query('CALL ViewDokter');
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if (count($results) > 0) {
@@ -29,13 +29,15 @@ return function (App $app) {
 
     $app->get('/dokter/{id}', function(Request $request, Response $response, $args) {
         $db = $this->get(PDO::class);
+        $id = $args['id'];
 
-        $query = $db->prepare('SELECT * FROM dokter_view WHERE id=?');
-        $query->execute([$args['id']]);
-        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $db->prepare('CALL ViewDokterId(:id)');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
 
-        if (count($results) > 0) {
-            $response->getBody()->write(json_encode($results[0]));
+        if ($results) {
+            $response->getBody()->write(json_encode($results));
         } else {
             $response->getBody()->write(json_encode(['message' => 'Data tidak ditemukan']));
         }
